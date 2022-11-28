@@ -1,4 +1,4 @@
-import { saveTask, getTasks, onGetTasks, deleteTask, getTask, updateTask } from './firebase.js'
+import { saveTask, getTasks, onGetTasks, deleteTask, getTask, updateTask, saveImage } from './firebase.js'
 
 const taskForm = document.getElementById('task-form')
 const tasksContainer = document.getElementById('task-container')
@@ -6,7 +6,19 @@ const tasksContainer = document.getElementById('task-container')
 let editStatus = false;
 let id = '';
 
+const uploadFileAction = (e) => {
+    const file = e.target.files[0];
+
+    if(file.type.includes('image')){
+        console.log('si es una imagen')
+        saveImage(file);
+    }
+
+    
+}
+
 window.addEventListener('DOMContentLoaded', async () => {
+
     onGetTasks((querySnapshot) => {
         tasksContainer.innerHTML = '';
         querySnapshot.forEach(doc => {
@@ -51,6 +63,10 @@ window.addEventListener('DOMContentLoaded', async () => {
         })
     });
 
+    //document.querySelector('#task-container').addEventListener('click', actionButtons);
+    //taskForm.addEventListener('submit', saveSubmit);
+    document.querySelector('#file-task').addEventListener('change', uploadFileAction);
+
 
 })
 
@@ -59,11 +75,12 @@ window.addEventListener('DOMContentLoaded', async () => {
 taskForm.addEventListener('submit', (e) => {
     e.preventDefault()
 
-    const title = taskForm['task-title']
-    const description = taskForm['task-description']
+    const title = taskForm['task-title'].value
+    const description = taskForm['task-description'].value
 
+    if( title.length > 3 && description.length > 3){
     if (!editStatus) {
-        saveTask(title.value, description.value)
+        saveTask(title, description)
     } else {
         updateTask(id, {
             title: title.value,
@@ -74,4 +91,8 @@ taskForm.addEventListener('submit', (e) => {
         taskForm['btn-task-save'].innerText = 'Save'
     }
     taskForm.reset()
+    }
+    else{
+        alert('Debes escribir algo :)')
+    }
 })
