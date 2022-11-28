@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Firebase CRUD</title>
     <link rel="stylesheet" href="index.css">
-    <link rel="stylesheet" href="https://bootswatch.com/5/superhero/bootstrap.min.css">
+    <link rel="stylesheet" href="https://bootswatch.com/5/superhero/bootstrap.css">
 </head>
 
 <body class="bg-dark">
@@ -26,6 +26,10 @@
                             <label for="description">Description</label>
                             <textarea class="form-control mb-3" id="task-description" rows="3" placeholder="Task Description"></textarea>
                             <input type="file" name="file-task" id="file-task">
+                            <div class="progress">
+                                <div id="progress" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                              </div>
+                            <img src="" alt="" id="image" width="300px">
                             <button class="btn btn-primary" id="btn-task-save">Save</button>
                         </form>
                     </div>
